@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Caspers Movie Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h1>Caspers Movie Page</h1>
+        <h3>Deployed by Travis</h3>
+
+        <h4>Get Movie</h4>
+        <form action="#" id="formGetMovie" onsubmit="fetchGetMovie();">
+            <input type="text" id="id" placeholder="1">
+            <button type="submit" id="btnGetMovie">Get Movie by ID</button>
+        </form>
+
+        <h4>Add Movie</h4>
+        <form action="#" id="formAddMovie" onsubmit="fetchAddMovie();">
+            Name: <input type="text" id="name" placeholder="En Film">
+            Year: <input type="text" id="year" placeholder="1999">
+            Actors: <input type="text" id="actors" placeholder="Actor1, Actor2, Actor3">
+            <button type="submit" id="btnAddMovie">Add Movie</button>
+        </form>
+
+        <div id="divSingleMovie">
+            <p id="displayId"></p>
+            <p id="displayName"></p>
+            <p id="displayYear"></p>
+            <p id="displayActors"></p>
+        </div>
+
+        <h4>Show All Movies</h4>
+        <button id="btnGetAllMovies">Show All Movies</button>
+        <div id="divAllMovies">
+            <ul id="ulAllMovies">
+
+            </ul>
+        </div>
+
+        <script>
+
+            document.getElementById("btnGetAllMovies").addEventListener("click", getAllMovies);
+
+            function fetchGetMovie() {
+                event.preventDefault();
+                var id = document.getElementById("id").value;
+
+                if (id === "") {
+                    alert("Please type in an ID");
+                } else {
+                    fetch("https://lecasper.dk/travis-movies-flow1-week3/api/movie/" + id)
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data === null) {
+                                    alert("No movie by that id");
+                                } else {
+                                    document.getElementById("displayId").innerHTML = "Id: " + data.id;
+                                    document.getElementById("displayName").innerHTML = "Name: " + data.name;
+                                    document.getElementById("displayYear").innerHTML = "Year: " + data.year;
+                                    document.getElementById("displayActors").innerHTML = "Name: " + data.actors.join();
+                                    console.log(data);
+                                }
+
+                            });
+                }
+
+
+            }
+
+            function getAllMovies() {
+                fetch("https://lecasper.dk/travis-movies-flow1-week3/api/movie/all")
+                        .then(res => res.json())
+                        .then(data => {
+                            var ul = document.getElementById("ulAllMovies");
+                            ul.innerHTML = "";
+                            for (i = 0; i < data.length; i++) {
+                                console.log(data[i]);
+                                var m = data[i];
+                                var li = document.createElement("li");
+                                li.appendChild(document.createTextNode(m.id + " " + m.name + " " + m.year + " " + m.actors));
+                                ul.appendChild(li);
+                            }
+                        });
+            }
+
+            function fetchAddMovie() {
+                event.preventDefault();
+                var url = "https://lecasper.dk/travis-movies-flow1-week3/api/movie";
+                var yearInput, nameInput, actorsInput;
+                yearInput = document.getElementById("year").value;
+                nameInput = document.getElementById("name").value;
+                actorsInput = document.getElementById("actors").value.replace(/\s/g, "");
+                var actorsArr = actorsInput.split(',');
+                var movie = {year: yearInput, name: nameInput, actors: actorsArr};
+                //console.log(movie);
+
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(movie),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': url
+                    }
+                })
+                        .then(res => res.json())
+                        .then(response => alert('Success: ' + JSON.stringify(response)))
+                        .catch(error => alert('Error: ' + error));
+            }
+        </script>
+    </body>
+</html>

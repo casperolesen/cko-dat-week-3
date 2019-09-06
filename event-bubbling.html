@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <style>
+    .mydiv {width: 25px; height: 25px; background-color: yellow; margin: 1px;}
+    </style>
+</head>
+<body>
+    <div id="outer">
+        <div id="divOne" class="mydiv"></div>
+        <div id="divTwo" class="mydiv"></div>
+        <div id="divThree" class="mydiv"></div>
+        <div id="divFour" class="mydiv"></div>
+        <div id="divFive" class="mydiv"></div>
+        <div id="divSix" class="mydiv"></div>
+        <div id="divSeven" class="mydiv"></div>
+        <div id="divEight" class="mydiv"></div>
+        <div id="divNine" class="mydiv"></div>
+        <div id="divTen" class="mydiv"></div>
+        <div id="divEleven" class="mydiv"></div>
+        <div id="divTwelve" class="mydiv"></div> 
+    </div>
+
+    <p id="txt"></p>
+
+    <form action="">
+        <input type="text">
+        <input type="submit" value="Add name">
+    </form>
+    
+</body>
+
+<script>
+
+    var names = [];
+
+    // adding click event to divOne
+    document.getElementById("divOne").addEventListener("click", function() {
+        document.getElementById("txt").innerHTML = "Hi from " + this.id;          
+    });
+
+    // adding click event to divTwo
+    document.getElementById("divTwo").addEventListener("click", function() {
+        document.getElementById("txt").innerHTML = "Hi from " + this.id;    
+    });
+
+    // adding click event to outer
+    document.getElementById("outer").addEventListener("click", function(e) {
+        document.getElementById("txt").innerHTML = "this.id: " + this.id + " target.id: " + e.target.id; 
+    });
+
+</script>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="divOne" style="height: 100px; width: 300px;"></div>
+    <div id="divTwo" style="height: 100px; width: 250px;"></div>
+    <div id="divThree" style="height: 100px; width: 200px;"></div>
+
+    <button id="btn">Change Color</button>
+
+</body>
+
+<script>
+var divs = document.getElementsByTagName("div");
+
+for (i = 0; i < divs.length; i++) {
+    divs[i].style.backgroundColor = "blue";
+}
+
+var btn = document.getElementById("btn");
+btn.addEventListener("click", function() {
+    document.getElementById("divOne").style.backgroundColor = "red";
+    document.getElementById("divTwo").style.backgroundColor = "yellow";
+    document.getElementById("divThree").style.backgroundColor = "green";
+})
+
+</script>
+
+</html>

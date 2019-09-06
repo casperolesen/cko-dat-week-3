@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" onsubmit="callFetch();">
+        <input type="text" name="searchInput" id="searchInput">
+        <button type="submit" id=btnSubmit>Get User</button>
+    </form>
+
+    <div id="singleResult" style="display: none">
+        <p id="pName">Name: </p>
+        <p id="pPhone">Phone: </p>
+
+        <p>Address</p>
+        <p id="pStreet">Street: </p>
+        <p id="pCity">City: </p>
+        <p id="pZip">Zip: </p>
+        <p id="pGeo">Geo: </p>
+    </div>
+</body>
+
+<script>
+    function callFetch() {
+        event.preventDefault();
+        var input = document.getElementById("searchInput").value;
+        var url = "https://jsonplaceholder.typicode.com/users/" + input;
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            // Inside this callback, and only here, the response data is available
+            document.getElementById("pName").textContent += data.name;
+            document.getElementById("pPhone").textContent += data.phone;
+
+            document.getElementById("pStreet").textContent += data.address.street;
+            document.getElementById("pCity").textContent += data.address.city;
+            document.getElementById("pZip").textContent += data.address.zipcode;
+            document.getElementById("pGeo").textContent += (data.address.geo.lat + ", " + data.address.geo.lng);
+
+            document.getElementById("singleResult").style.display = "block";
+            console.log("data",data);
+            
+        })
+        
+    }
+</script>
+</html>
